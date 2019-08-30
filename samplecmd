@@ -1,0 +1,1 @@
+curl -i -H "Content-Type: application/json" -X POST -d '{"projectPath":"/Users/rajdeep/node-js-sqlite","lang":"nodejs","isWebProject":1,"portNumber":8450,"imageName":"mi","serviceName":"ms","composeProjectName":"mcp"}' http://localhost:5000/collectdata
