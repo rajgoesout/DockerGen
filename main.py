@@ -4,6 +4,7 @@ import json
 import shutil
 
 from flask import Flask, session, jsonify, request, redirect
+from jinja2 import Environment, FileSystemLoader
 
 # from templates import nodejshelper
 
@@ -57,7 +58,17 @@ def handle_nodejs(resp):
     print(templateData)
     nodeDockerfilePath = os.path.abspath('.') + '/templates/node/Dockerfile'
     projectDockerfilePath = templateData['projectPath'] + '/Dockerfile'
-    shutil.copy2(nodeDockerfilePath, projectDockerfilePath)
+    env = Environment(loader=FileSystemLoader('./templates/node'))
+    template = env.get_template('Dockerfile')
+    output_from_parsed_template = template.render(
+        # environment='debug',
+        isWebProject=templateData['isWebProject'],
+        portNumber=templateData['portNumber']
+    )
+    print(output_from_parsed_template)
+    with open(projectDockerfilePath, 'w') as df:
+        df.write(output_from_parsed_template)
+
     handle_common(templateData)
 
 
