@@ -1,13 +1,11 @@
 import os
-import sys
-import json
 import stat
-import shutil
+import sys
 
-from flask import Flask, session, jsonify, request, redirect
+from flask import Flask, jsonify, request
 from jinja2 import Environment, FileSystemLoader
 
-# from templates import nodejshelper
+from .allowaxios import crossdomain
 
 app = Flask(__name__)
 
@@ -30,26 +28,56 @@ FILE_SYSTEM_ROOT = '/'
 
 
 @app.route('/')
+@crossdomain(origin='*')
 def home():
     plat = sys.platform
     return 'Hello world. You\'re on ' + plat
 
 
 @app.route('/browser')
+@crossdomain(origin='*')
 def browse():
     itemList = os.listdir(FILE_SYSTEM_ROOT)
-    return {'list': itemList}
+    itemListDetailed = []
+    for item in itemList:
+        itemOriginal = item
+        item = os.path.join(FILE_SYSTEM_ROOT, item)
+        if os.path.isfile(item):
+            print('isdir')
+            itemD = (item, 'F', itemOriginal)  # file
+        elif os.path.isdir(item):
+            print('isfile')
+            itemD = (item, 'D', itemOriginal)  # directory
+        else:
+            print('isnone')
+            itemD = (item, None, itemOriginal)  # unknown
+        itemListDetailed.append(itemD)
+    print(itemListDetailed)
+    return {'list': itemListDetailed}
 
 
 @app.route('/browser/<path:urlFilePath>')
+@crossdomain(origin='*')
 def browser(urlFilePath):
     nestedFilePath = os.path.join(FILE_SYSTEM_ROOT, urlFilePath)
     if os.path.isdir(nestedFilePath):
         itemList = os.listdir(nestedFilePath)
         fileProperties = {'filepath': nestedFilePath}
-        if not urlFilePath.startswith("/"):
+        if not urlFilePath.startswith('/'):
             urlFilePath = '/' + urlFilePath
-        return {'list': itemList}
+        itemListDetailed = []
+        for item in itemList:
+            itemOriginal = item
+            item = os.path.join(urlFilePath, item)
+            if os.path.isfile(item):
+                itemD = (item, 'F', itemOriginal)  # file
+            elif os.path.isdir(item):
+                itemD = (item, 'D', itemOriginal)  # directory
+            else:
+                itemD = (item, None, itemOriginal)  # unknown
+            itemListDetailed.append(itemD)
+        print(itemListDetailed)
+        return {'list': itemListDetailed}
     if os.path.isfile(nestedFilePath):
         fileProperties = {"filepath": nestedFilePath}
         # Opening the file and getting metadata
@@ -58,8 +86,8 @@ def browser(urlFilePath):
         fileProperties['mode'] = stat.S_IMODE(sbuf.st_mode)
         fileProperties['mtime'] = sbuf.st_mtime
         fileProperties['size'] = sbuf.st_size
-        if not urlFilePath.startswith("/"):
-            urlFilePath = "/" + urlFilePath
+        if not urlFilePath.startswith('/'):
+            urlFilePath = '/' + urlFilePath
         return {'properties': fileProperties}
     return 'something bad happened'
 
@@ -81,7 +109,8 @@ def get_default_template_data(resp):
 
 
 def handle_common(templateData):
-    pass
+    print(templateData)
+    print(templateData['projectPath'])
 
 
 def handle_nodejs(resp):
@@ -90,7 +119,7 @@ def handle_nodejs(resp):
     templateData['includeComposeForDebug'] = True
     templateData['debugPortNumber'] = "5858"
 
-    print(templateData)
+    # print(templateData)
     nodeDockerfilePath = os.path.abspath('.') + '/templates/node/Dockerfile'
     projectDockerfilePath = templateData['projectPath'] + '/Dockerfile'
     env = Environment(loader=FileSystemLoader('./templates/node'))
@@ -98,9 +127,30 @@ def handle_nodejs(resp):
     output_from_parsed_template = template.render(
         # environment='debug',
         isWebProject=templateData['isWebProject'],
+        portNumber=templateData['portNumber'],
+        debugPortNumber=templateData['debugPortNumber']
+    )
+    # print(output_from_parsed_template)
+    with open(projectDockerfilePath, 'w') as df:
+        df.write(output_from_parsed_template)
+
+    handle_common(templateData)
+
+
+def handle_golang(resp):
+    templateData = get_default_template_data(resp)
+    # templateData['volume']
+
+    goDockerfilePath = os.path.abspath('.') + '/templates/go/Dockerfile'
+    projectDockerfilePath = templateData['projectPath'] + '/Dockerfile'
+    env = Environment(loader=FileSystemLoader('./templates/go'))
+    template = env.get_template('Dockerfile')
+    output_from_parsed_template = template.render(
+        # environment='debug',
+        isWebProject=templateData['isWebProject'],
         portNumber=templateData['portNumber']
     )
-    print(output_from_parsed_template)
+    # print(output_from_parsed_template)
     with open(projectDockerfilePath, 'w') as df:
         df.write(output_from_parsed_template)
 
@@ -112,11 +162,37 @@ def handle_python(resp):
 
 
 def do_stuff(resp):
+    print(resp)
+    nestedFilePath = os.path.join(FILE_SYSTEM_ROOT, resp['projectPath'])
+    if os.path.isdir(nestedFilePath):
+        itemList = os.listdir(nestedFilePath)
+        fileProperties = {'filepath': nestedFilePath}
+        if not resp['projectPath'].startswith('/'):
+            resp['projectPath'] = '/' + resp['projectPath']
+        d = {'list': itemList}
+        for i in itemList:
+            # print(i)
+            if i == 'requirements.txt' or i == 'Pipfile':
+                print('python/flask/django')
+                lang = 'py'
+            elif i == 'package.json':
+                print('nodejs')
+                lang = 'nodejs'
+            elif i == 'Cargo.toml':
+                print('rust')
+                lang = 'rust'
+        for i in itemList:
+            if i == 'main.py':
+                entry = 'main.py'
+            elif i == 'app.py':
+                entry = 'app.py'
+        # print(d)
     if resp['lang'] == 'nodejs':
         handle_nodejs(resp)
 
 
 @app.route('/collectdata', methods=['GET', 'POST'])
+@crossdomain(origin='*')
 def get_data():
     try:
         # absolute path of project root directory
@@ -131,7 +207,7 @@ def get_data():
         serviceName = request.json['serviceName']
         composeProjectName = request.json['composeProjectName']
 
-        allowed_langs = ['python', 'nodejs', 'flask']
+        allowed_langs = ['python', 'nodejs', 'flask', 'go']
         if lang not in allowed_langs:
             return 'not possible'
         resp = {
@@ -147,34 +223,3 @@ def get_data():
         return jsonify(resp)
     except:
         return 'error'
-
-
-# @app.route('/selectlang', methods=['GET', 'POST'])
-# def select_language():
-#     """Lang (?lang) can be nodejs/python(flask)"""
-#     if not request.json or not 'lang' in request.json:
-#         print('not found')
-#         return redirect('/')
-#     lang = request.json['lang']
-#     allowed_langs = ['python', 'nodejs', 'flask']
-#     if lang in allowed_langs:
-#         return redirect('/ws', Response={'lang': lang})
-#         # return jsonify({'lang': lang})
-#     else:
-#         print('not found')
-#         return redirect('/')
-
-
-# @app.route('/ws', methods=['GET', 'POST'])
-# def web_server():
-#     """Does ur app use web server? Can be 0 (false) or 1 (true).
-#     Default: 1"""
-#     if not request.json or not 'lang' in request.json:
-#         print('not found')
-#         return redirect('/')
-#     try:
-#         ws = request.json['ws']
-#     except:
-#         ws = 1
-#     lang = request.json['lang']
-#     return jsonify({'lang': lang, 'ws': ws})

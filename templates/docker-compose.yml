@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  {{ serviceName }}:
+    image: {{ imageName }}{% if environment == 'debug' %}:debug{% endif %}
+    build:
+      context: .
+      dockerfile: Dockerfile{% if environment == 'debug' %}.debug{% endif %}{% if ((isWebProject and portNumber) or (environment == 'debug' and debugPortNumber)) %}
+    ports:{% endif %}{% if (isWebProject and portNumber) %}
+      - "{{ portNumber }}:{{ portNumber }}"{% endif %}{% if (environment == 'debug') %}{% if (debugPortNumber) %}
+      - "{{ debugPortNumber }}:{{ debugPortNumber }}"{% endif %}{% if volumeMap %}
+    volumes:
+      - {{ volumeMap }}{% endif %}{% if includeComposeForDebug %}
+    environment:
+      - REMOTE_DEBUGGING{% endif %}
