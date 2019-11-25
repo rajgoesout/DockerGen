@@ -3,11 +3,12 @@ import stat
 import sys
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from jinja2 import Environment, FileSystemLoader
 
-from .allowaxios import crossdomain
 
 app = Flask(__name__)
+CORS(app)
 
 wsgi_app = app.wsgi_app
 
@@ -28,14 +29,12 @@ FILE_SYSTEM_ROOT = '/'
 
 
 @app.route('/')
-@crossdomain(origin='*')
 def home():
     plat = sys.platform
     return 'Hello world. You\'re on ' + plat
 
 
 @app.route('/browser')
-@crossdomain(origin='*')
 def browse():
     itemList = os.listdir(FILE_SYSTEM_ROOT)
     itemListDetailed = []
@@ -57,7 +56,6 @@ def browse():
 
 
 @app.route('/browser/<path:urlFilePath>')
-@crossdomain(origin='*')
 def browser(urlFilePath):
     nestedFilePath = os.path.join(FILE_SYSTEM_ROOT, urlFilePath)
     if os.path.isdir(nestedFilePath):
@@ -192,7 +190,6 @@ def do_stuff(resp):
 
 
 @app.route('/collectdata', methods=['GET', 'POST'])
-@crossdomain(origin='*')
 def get_data():
     try:
         # absolute path of project root directory
