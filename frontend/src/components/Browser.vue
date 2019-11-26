@@ -1,5 +1,8 @@
 <template>
   <div id="root">
+    <b-button @click="generate()">
+      Generate Dockerfile here
+    </b-button>
     <div class="columns is-multiline is-mobile">
       <div
         v-for="(item, index) in info"
@@ -37,8 +40,9 @@
 <script>
 import axios from 'axios'
 
-const HOST = 'http://localhost:5000'
-const API_URL = 'http://localhost:5000/browser'
+const BASE_SERVER_URL = 'http://localhost:5000'
+const API_URL = BASE_SERVER_URL + '/browser'
+const COLLECTDATA_URL = BASE_SERVER_URL + '/collectdata'
 const URL_PATH = '/'
 
 export default {
@@ -47,16 +51,14 @@ export default {
   data() {
     return {
       info: null,
-      urlPath: HOST + this.$route.path
+      urlPath: BASE_SERVER_URL + this.$route.path
     }
   },
   watch: {
     '$route.params.urlPath': function(newVal, oldVal) {
-      console.log(this.urlPath)
       if (newVal !== null && newVal != undefined)
         this.urlPath = API_URL + '/' + newVal
       else this.urlPath = API_URL
-      console.log(oldVal, newVal, this.urlPath)
       this.init()
     }
   },
@@ -69,20 +71,29 @@ export default {
   methods: {
     init() {
       let requestUrl = API_URL
-      console.log('UP', this.urlPath)
       if (this.urlPath !== null) requestUrl = this.urlPath
-      console.log('rurl', requestUrl)
       if (requestUrl[requestUrl.length - 1] == '/') {
-        console.log()
         requestUrl = requestUrl.substring(0, requestUrl.length - 1)
       }
       axios.get(requestUrl).then(response => {
         this.info = response.data.list
       })
-      console.log('hello')
     },
     clickMe() {
       this.$buefy.notification.open('Clicked!!')
+    },
+    generate() {
+      console.log(this.urlPath)
+      console.log(COLLECTDATA_URL)
+      axios.post(COLLECTDATA_URL, {
+        projectPath: this.urlPath,
+        lang: 'nodejs',
+        isWebProject: true,
+        portNumber: 3000,
+        imageName: 'myImg',
+        serviceName: 'myService',
+        composeProjectName: 'calmNComposed'
+      })
     }
   }
 }
