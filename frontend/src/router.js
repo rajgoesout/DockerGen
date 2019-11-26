@@ -27,11 +27,6 @@ export default new Router({
       component: Browser
     },
     {
-      path: '/browser/',
-      name: 'browser',
-      component: Browser
-    },
-    {
       path: '/browser/:urlPath(.*)',
       name: 'urlPath',
       component: Browser
