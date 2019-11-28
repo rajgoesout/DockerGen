@@ -93,6 +93,7 @@ def browser(urlFilePath):
 def get_default_template_data(resp):
     return {
         'projectPath': resp['projectPath'],
+        'projectDockerfilePath': resp['projectDockerfilePath'],
         'lang': resp['lang'],
         'composeProjectName': resp['composeProjectName'],
         'imageName': resp['imageName'],
@@ -119,7 +120,7 @@ def handle_nodejs(resp):
 
     # print(templateData)
     nodeDockerfilePath = os.path.abspath('.') + '/templates/node/Dockerfile'
-    projectDockerfilePath = templateData['projectPath'] + '/Dockerfile'
+    projectDockerfilePath = templateData['projectDockerfilePath'] + '/Dockerfile'
     env = Environment(loader=FileSystemLoader('./templates/node'))
     template = env.get_template('Dockerfile')
     output_from_parsed_template = template.render(
@@ -128,7 +129,6 @@ def handle_nodejs(resp):
         portNumber=templateData['portNumber'],
         debugPortNumber=templateData['debugPortNumber']
     )
-    # print(output_from_parsed_template)
     with open(projectDockerfilePath, 'w') as df:
         df.write(output_from_parsed_template)
 
@@ -140,7 +140,7 @@ def handle_golang(resp):
     # templateData['volume']
 
     goDockerfilePath = os.path.abspath('.') + '/templates/go/Dockerfile'
-    projectDockerfilePath = templateData['projectPath'] + '/Dockerfile'
+    projectDockerfilePath = templateData['projectDockerfilePath'] + '/Dockerfile'
     env = Environment(loader=FileSystemLoader('./templates/go'))
     template = env.get_template('Dockerfile')
     output_from_parsed_template = template.render(
@@ -161,12 +161,13 @@ def handle_python(resp):
 
 def do_stuff(resp):
     print(resp)
-    nestedFilePath = os.path.join(FILE_SYSTEM_ROOT, resp['projectPath'])
+    nestedFilePath = os.path.join(
+        FILE_SYSTEM_ROOT, resp['projectDockerfilePath'])
     if os.path.isdir(nestedFilePath):
         itemList = os.listdir(nestedFilePath)
         fileProperties = {'filepath': nestedFilePath}
-        if not resp['projectPath'].startswith('/'):
-            resp['projectPath'] = '/' + resp['projectPath']
+        if not resp['projectDockerfilePath'].startswith('/'):
+            resp['projectDockerfilePath'] = '/' + resp['projectDockerfilePath']
         d = {'list': itemList}
         for i in itemList:
             # print(i)
@@ -194,6 +195,7 @@ def get_data():
     try:
         # absolute path of project root directory
         projectPath = request.json['projectPath']
+        projectDockerfilePath = request.json['projectDockerfilePath']
         lang = request.json['lang']  # lang or framework
         isWebProject = request.json['isWebProject']
         if isWebProject:
@@ -209,6 +211,7 @@ def get_data():
             return 'not possible'
         resp = {
             'projectPath': projectPath,
+            'projectDockerfilePath': projectDockerfilePath,
             'lang': lang,
             'isWebProject': isWebProject,
             'portNumber': portNumber,

@@ -3,7 +3,10 @@
     <b-button @click="generate()">
       Generate Dockerfile here
     </b-button>
-    <div class="columns is-multiline is-mobile">
+    <div
+      class="columns is-multiline is-mobile"
+      style="margin-top: 4px;"
+    >
       <div
         v-for="(item, index) in info"
         :key="index"
@@ -82,11 +85,20 @@ export default {
     clickMe() {
       this.$buefy.notification.open('Clicked!!')
     },
+    remove_first_occurrence(str, searchstr) {
+      var index = str.indexOf(searchstr)
+      if (index === -1) {
+        return str
+      }
+      return str.slice(0, index) + str.slice(index + searchstr.length)
+    },
     generate() {
-      console.log(this.urlPath)
-      console.log(COLLECTDATA_URL)
       axios.post(COLLECTDATA_URL, {
         projectPath: this.urlPath,
+        projectDockerfilePath: this.remove_first_occurrence(
+          this.$route.path,
+          '/browser'
+        ),
         lang: 'nodejs',
         isWebProject: true,
         portNumber: 3000,
