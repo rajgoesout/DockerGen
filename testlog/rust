@@ -1,0 +1,188 @@
+
+ rajdeep@RB  ~/DockerGenResearch/code   traits ●  python3 test.py
+specialfiles freq trait
+
+26
+Rocket
+1. rust - 6768
+2. flask - 1083
+3. django - 767
+4. nodejs - 470
+5. go - 459
+
+RustPython
+1. rust - 8034
+2. django - 715
+3. flask - 457
+4. nodejs - 278
+5. go - 263
+
+actix
+1. rust - 1952
+2. django - 1667
+3. flask - 1613
+4. go - 1607
+5. scala - 1579
+
+actix-web
+1. rust - 4504
+2. go - 1171
+3. django - 1171
+4. flask - 1116
+5. scala - 1033
+
+amethyst
+1. rust - 7678
+2. go - 847
+3. nodejs - 401
+4. django - 369
+5. flask - 356
+
+cargo
+1. rust - 8840
+2. go - 394
+3. nodejs - 194
+4. scala - 191
+5. django - 189
+
+citybound
+1. rust - 6291
+2. go - 761
+3. nodejs - 758
+4. django - 747
+5. scala - 720
+
+coreutils
+1. rust - 6520
+2. django - 2993
+3. go - 125
+4. scala - 122
+5. flask - 119
+
+diesel
+1. rust - 7753
+2. go - 672
+3. nodejs - 511
+4. flask - 386
+5. django - 361
+
+ffsend
+1. rust - 3547
+2. go - 1322
+3. scala - 1282
+4. nodejs - 1282
+5. flask - 1282
+
+firecracker
+1. flask - 9783
+2. rust - 126
+3. django - 44
+4. nodejs - 19
+5. go - 13
+
+hexyl
+1. rust - 2032
+2. go - 1596
+3. scala - 1592
+4. nodejs - 1592
+5. flask - 1592
+
+hyper
+1. rust - 2671
+2. go - 1490
+3. django - 1467
+4. flask - 1465
+5. scala - 1452
+
+ktmpl
+1. rust - 2041
+2. scala - 1591
+3. nodejs - 1591
+4. go - 1591
+5. flask - 1591
+
+leaf
+1. rust - 2859
+2. go - 1431
+3. django - 1430
+4. flask - 1429
+5. scala - 1424
+
+libra
+1. flask - 9999
+2. rust - 0
+3. go - 0
+4. django - 0
+5. nodejs - 0
+
+navi
+1. rust - 2016
+2. go - 1689
+3. django - 1579
+4. flask - 1577
+5. scala - 1568
+
+nushell
+1. go - 3302
+2. rust - 2544
+3. django - 1580
+4. flask - 954
+5. scala - 812
+
+sonic
+1. rust - 3243
+2. nodejs - 1889
+3. django - 1231
+4. flask - 1224
+5. go - 1212
+
+spotify-tui
+1. rust - 3204
+2. scala - 1359
+3. nodejs - 1359
+4. go - 1359
+5. flask - 1359
+
+starship
+1. go - 5875
+2. rust - 1419
+3. nodejs - 879
+4. django - 679
+5. flask - 600
+
+swc
+1. rust - 4355
+2. go - 1712
+3. flask - 1036
+4. django - 1015
+5. nodejs - 963
+
+tokio
+1. rust - 5738
+2. go - 933
+3. scala - 854
+4. nodejs - 846
+5. flask - 825
+
+xi-editor
+1. rust - 8889
+2. go - 279
+3. flask - 245
+4. django - 196
+5. scala - 194
+
+xsv
+1. rust - 3119
+2. django - 1445
+3. flask - 1386
+4. go - 1384
+5. scala - 1331
+
+bf-rs
+1. rust - 1716
+2. scala - 1656
+3. nodejs - 1656
+4. go - 1656
+5. flask - 1656
+
+ 

@@ -1,0 +1,9 @@
+scala 12
+sbt 11
+project 11
+test 11
+src/main/scala 9
+src/main/java 9
+Main.scala 6
+com 5
+target 0

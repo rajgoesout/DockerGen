@@ -1,0 +1,9 @@
+scala 9558
+test 5333
+src/main/scala 4406
+com 1820
+sbt 1591
+project 553
+src/main/java 267
+Main.scala 37
+target 0

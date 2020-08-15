@@ -1,0 +1,88 @@
+
+ rajdeep@RB  ~/DockerGenResearch/code   traits ●  python3 test.py
+12
+predictionio
+1. flask - 9999
+2. scala - 0
+3. django - 0
+4. go - 0
+5. nodejs - 0
+
+akka
+1. go - 7693
+2. django - 843
+3. scala - 681
+4. nodejs - 277
+5. flask - 268
+
+CMAK
+1. flask - 3126
+2. scala - 1484
+3. nodejs - 1436
+4. go - 1418
+5. rust - 1320
+
+gitbucket
+1. django - 3488
+2. scala - 2140
+3. go - 1181
+4. nodejs - 1095
+5. flask - 1064
+
+lila
+1. nodejs - 3714
+2. django - 2411
+3. scala - 1475
+4. go - 923
+5. flask - 790
+
+linkerd
+1. scala - 9147
+2. go - 580
+3. nodejs - 98
+4. django - 62
+5. flask - 57
+
+openwhisk
+1. go - 9999
+2. scala - 0
+3. nodejs - 0
+4. rust - 0
+5. django - 0
+
+prisma
+1. scala - 7558
+2. django - 642
+3. flask - 478
+4. go - 476
+5. rust - 430
+
+polynote
+1. flask - 9999
+2. rust - 0
+3. nodejs - 0
+4. scala - 0
+5. django - 0
+
+mmlspark
+1. django - 3876
+2. scala - 2480
+3. flask - 1118
+4. go - 1102
+5. nodejs - 722
+
+sbt-native-packager
+1. django - 4249
+2. scala - 3460
+3. go - 851
+4. flask - 647
+5. rust - 462
+
+reactivemongo-demo-app
+1. nodejs - 2938
+2. django - 1597
+3. flask - 1421
+4. scala - 1363
+5. go - 1343
+
+ 

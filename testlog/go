@@ -1,0 +1,142 @@
+ rajdeep@RB  ~/DockerGenResearch/code   traits ●  python3 test.py 
+'specialfiles freq only'
+
+awesome-go
+1. scala - 1676
+2. rust - 1676
+3. nodejs - 1676
+4. flask - 1676
+5. django - 1676
+go-app
+1. nodejs - 4942
+2. go - 1031
+3. scala - 1006
+4. rust - 1006
+5. flask - 1006
+istio
+1. go - 8774
+2. rust - 287
+3. scala - 286
+4. django - 233
+5. nodejs - 211
+harbor
+1. go - 3363
+2. rust - 2236
+3. django - 1604
+4. flask - 1600
+5. nodejs - 803
+fabric
+1. go - 4060
+2. nodejs - 3258
+3. rust - 755
+4. django - 699
+5. flask - 660
+nomad
+1. rust - 3505
+2. go - 2428
+3. nodejs - 2270
+4. django - 661
+5. scala - 654
+aws-sdk-go
+1. flask - 3293
+2. rust - 3018
+3. go - 1540
+4. nodejs - 872
+5. scala - 658
+rancher
+1. go - 7694
+2. rust - 1960
+3. nodejs - 155
+4. django - 148
+5. flask - 34
+chubaofs
+1. go - 9999
+2. rust - 0
+3. nodejs - 0
+4. django - 0
+5. flask - 0
+sourcegraph
+1. go - 7010
+2. django - 2707
+3. rust - 120
+4. nodejs - 97
+5. scala - 42
+dgraph
+1. flask - 8396
+2. go - 543
+3. django - 444
+4. rust - 297
+5. nodejs - 169
+easyjson
+1. django - 1725
+2. flask - 1700
+3. go - 1668
+4. rust - 1641
+5. scala - 1632
+jwt-go
+1. rust - 5663
+2. flask - 1022
+3. scala - 836
+4. go - 836
+5. nodejs - 833
+act
+1. flask - 3751
+2. nodejs - 1604
+3. go - 1186
+4. scala - 1154
+5. rust - 1154
+origin
+1. nodejs - 3188
+2. rust - 1975
+3. scala - 1595
+4. django - 1588
+5. flask - 1508
+packer
+1. go - 4912
+2. django - 2236
+3. nodejs - 1572
+4. flask - 575
+5. scala - 410
+gorm
+1. django - 1701
+2. go - 1680
+3. scala - 1654
+4. rust - 1654
+5. nodejs - 1654
+dapr
+1. flask - 4141
+2. nodejs - 1336
+3. rust - 1255
+4. go - 1216
+5. django - 1066
+argo
+1. django - 6320
+2. go - 1354
+3. nodejs - 1128
+4. scala - 432
+5. rust - 397
+operator-lifecycle-manager
+1. go - 9769
+2. django - 79
+3. rust - 79
+4. nodejs - 27
+5. flask - 24
+fzf
+1. django - 8258
+2. rust - 377
+3. flask - 351
+4. go - 341
+5. scala - 336
+chat
+1. django - 1933
+2. flask - 1851
+3. go - 1663
+4. rust - 1535
+5. scala - 1508
+operator-sdk
+1. go - 6627
+2. rust - 1784
+3. nodejs - 508
+4. scala - 404
+5. django - 339
+ 
